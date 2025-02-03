@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admin Panel</title>
+    <style>
+        @charset "UTF-8";
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #1F2739;
+            color: #A7A1AE;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #4DC3FA;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            color: #FB667A;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #2C3446;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 1em;
+            border-bottom: 1px solid #444;
+        }
+
+        th {
+            background-color: #1F2739;
+            color: #FFF;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #323C50;
+        }
+
+        tr:hover {
+            background-color: #464A52;
+            transition: 0.3s;
+        }
+
+        /* Improved Status Buttons */
+        .newbuttons1 {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .newbuttons1:hover {
+            background-color: #3e8e41;
+            transform: scale(1.1);
+        }
+
+        .newbuttons2 {
+            background-color: #FF4B4B; /* Red */
+            color: white;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .newbuttons2:hover {
+            background-color: #d43f3f;
+            transform: scale(1.1);
+        }
+
+        .newbuttons3 {
+            background-color: #FFA500; /* Orange */
+            color: white;
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .newbuttons3:hover {
+            background-color: #e69500;
+            transform: scale(1.1);
+        }
+
+        /* Admission Letter Link */
+        .admission-link {
+            color: green;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .admission-link:hover {
+            text-decoration: underline;
+            color: #2ecc71;
+        }
+
+        /* Approve Button */
+    .approve-btn {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        padding: 8px 14px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-bottom: 7px;;
+    }
+
+    .approve-btn:hover {
+        background-color: #3e8e41;
+        transform: scale(1.1);
+    }
+
+    /* Reject Button */
+    .reject-btn {
+        background-color: #FF4B4B; /* Red */
+        color: white;
+        padding: 8px 14px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .reject-btn:hover {
+        background-color: #d43f3f;
+        transform: scale(1.1);
+    }
+/* Table Row Hover Effect */
+/* Table Row Hover Effect */
+tbody tr:hover {
+    background-color: #464A52 !important; /* Ensure it applies */
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <h1>Student Admin Panel</h1>
+    <h2> <a href="/" target="_blank" style="color: #FB667A;">🏠 Home page</a></h2>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Degree</th>
+                    <th>Institution</th>
+                    <th>Passed Year</th>
+                    <th>ID Proof</th>
+                    <th>Status</th>    
+                    <th>Admission Letter</th> 
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.id }}</td>
+                    <td>{{ application.name }}</td>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.phone }}</td>
+                    <td>{{ application.dob }}</td>
+                    <td>{{ application.gender }}</td>
+                    <td>{{ application.degree }}</td>
+                    <td>{{ application.institution_name }}</td>
+                    <td>{{ application.passed_year }}</td>
+                    <td>{{ application.id_proof }}</td>
+
+                    <!-- Status Buttons -->
+                    <td>
+                        {% if application.status == 'Approved' %}
+                            <button class="newbuttons1">Approved</button>
+                        {% elif application.status == 'Denied' %}
+                            <button class="newbuttons2">Denied</button>
+                        {% else %}
+                            <button class="newbuttons3">Pending</button>
+                        {% endif %}
+                    </td>
+
+                    <!-- Admission Letter -->
+                    <td>
+                        {% if application.status == 'Approved' %}
+                            <!-- <a href="{{ application.admission_letter_url }}" class="admission-link">Admission Letter</a> -->
+                            <a href="{{ url_for('download_pdf', id=application.id) }}" target="_blank" class="admission-link">Download PDF</a>
+                            {% else %}
+                            -----
+                        {% endif %}
+                    </td>
+
+                    <td >
+                        {% if application.status == 'Pending' %}
+                            <a href="{{ url_for('approve', id=application.id) }}">
+                                <button class="approve-btn">Approve</button>
+                            </a>
+                            <a href="{{ url_for('reject', id=application.id) }}">
+                                <button class="reject-btn">Reject</button>
+                            </a>
+                        {% else %}
+                            -----
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

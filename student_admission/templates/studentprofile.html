@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .profile-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .profile-header h2 {
+      color: #007bff;
+    }
+    .profile-item {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .profile-label {
+      font-weight: bold;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <br>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="profile-card">
+          <div class="offset-md-10 ">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+          </div>
+          <div class="profile-header">
+            <h2>Student Profile</h2>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="profile-item"><span class="profile-label">Name:</span> {{student.name}}</div>
+              <div class="profile-item"><span class="profile-label">Email:</span> {{student.email}}</div>
+              <div class="profile-item"><span class="profile-label">Phone:</span> {{student.phone}}</div>
+              <div class="profile-item"><span class="profile-label">DOB:</span> {{student.dob}}</div>
+              <div class="profile-item"><span class="profile-label">Gender:</span> {{student.gender}}</div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="profile-item"><span class="profile-label">Degree:</span> {{student.degree}}</div>
+              <div class="profile-item"><span class="profile-label">Institution:</span> {{student.institution_name}}</div>
+              <div class="profile-item"><span class="profile-label">Passed Out Year:</span> {{student.passed_year}}</div>
+              <div class="profile-item"><span class="profile-label">City:</span> {{student.city}}</div>
+              <div class="profile-item"><span class="profile-label">State:</span> {{student.state}}</div>
+            </div>
+            <hr>
+            <div class="col-md-6">
+              {% if student.degree_certificate %}
+              <div class="profile-item">
+                  <span class="profile-label">Degree Certificate:</span>
+                  <a href="{{ url_for('uploaded_file', filename=student.degree_certificate) }}" target="_blank">
+                      {{ student.degree_certificate }}
+                  </a>
+              </div>
+              {% endif %}
+
+            {% if student.id_proof %}
+            <div class="profile-item">
+                <span class="profile-label">ID Proof:</span>
+                <a href="{{ url_for('uploaded_file', filename=student.id_proof) }}" target="_blank">
+                    {{ student.id_proof }}
+                </a>
+            </div>
+            {% endif %}
+           </div>
+            <div class="col-md-6">
+              <div class="profile-item"><span class="profile-label">Submited at:</span> {{student.submitted_at}}</div>
+              
+              {% if student.status == 'Approved' %}
+                <div class="profile-item" style="background: greenyellow; margin-right:145px;border-radius: 5px;padding-left:6px"><span class="profile-label">Status:</span> {{student.status}}</div>
+              {% elif student.status == 'Pending'%}
+              <div class="profile-item" style="background: rgb(232, 249, 80); margin-right:145px;border-radius: 5px;padding-left:6px"><span class="profile-label">Status:</span> {{student.status}}</div>
+              {% else %}
+              <div class="profile-item" style="background: rgb(237, 40, 46); margin-right:145px;border-radius: 5px;padding-left:6px"><span class="profile-label">Status:</span> {{student.status}}</div>
+              {% endif %}
+              
+            
+
+            </div>
+
+            {% if student.status == 'Approved' %}
+              <hr>
+              <div class="offset-md-3 col-md-6">
+                <div class="profile-item"><span class="profile-label">Admission Letter:</span> <a href="{{ url_for('download_pdf', id=student.id) }}" class="admission-link">Download PDF</a></div>
+              </div>
+            {% endif %}
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
